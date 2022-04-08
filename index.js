@@ -10,7 +10,7 @@ server.listen(PORT, () => {
 });
 
 const client = new Discord.Client({
-  intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MEMBERS"],
+  intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MEMBERS", "GUILD_PRESENCES"],
 });
 
 client.on("ready", () => {
@@ -23,6 +23,12 @@ client.on("guildMemberAdd", async (member) => {
     .send(
       `${member} Willkommen Sterblicher! Hier Regieren deine 3 Herrscher. Hab keine Angst, Sie passen auf dich auf.`
     );
+});
+
+client.on("guildMemberUpdate", async (member) => {
+  if (member.id === process.env.ChipsID) {
+    member.setNickname("Marvin Destroyer");
+  }
 });
 
 client.login(process.env.Token);
