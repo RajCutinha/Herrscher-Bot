@@ -15,6 +15,10 @@ const client = new Discord.Client({
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}`);
+  client.user.setPresence({
+    status: "online",
+    activities: [{ name: "Herrscht über diesen Server" }],
+  });
 });
 
 client.on("guildMemberAdd", async (member) => {
@@ -25,10 +29,12 @@ client.on("guildMemberAdd", async (member) => {
     );
 });
 
+/*
 client.on("guildMemberUpdate", async (member) => {
   if (member.id === process.env.ChipsID) {
     member.setNickname("Marvin Destroyer");
   }
 });
+*/
 
 client.login(process.env.Token);
