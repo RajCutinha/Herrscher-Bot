@@ -7,7 +7,7 @@ const client = new Discord.Client({
   intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MEMBERS", "GUILD_PRESENCES"],
 });
 
-client.on("ready", () => {
+client.on("ready", async () => {
   console.log(`Logged in as ${client.user.tag}`);
   client.user.setPresence({
     status: "online",
@@ -21,6 +21,35 @@ client.on("guildMemberAdd", async (member) => {
     .send(
       `${member} Willkommen Sterblicher! Hier Regieren deine 3 Herrscher. Hab keine Angst, Sie passen auf dich auf.`
     );
+});
+
+client.on("messageCreate", async (message) => {
+  const mentions = Array.from(message.mentions.users);
+  let content = message.content;
+
+  function messageLength(msgContent) {
+    let temp = msgContent;
+
+    mentions.forEach((arrValue) => {
+      temp = temp.toString().replace("<@" + arrValue[0] + ">", "");
+    });
+
+    return temp.trim().length < 5;
+  }
+
+  if (mentions.length >= 1 && messageLength(content)) {
+    message
+      .delete()
+      .then((fullfilled) => {
+        client.users.cache
+          .get(message.author.id)
+          .send(
+            "Sterblicher! Wage es nicht diesen Server voll zu spamen um deine Lust zu befridigen. Als Herrscher ist es meine Pflicht mein Untertanen vor deiner Begierde zu schützen. Schreibe das nächste mal eine Nachricht mit mindestens 5 Zeichen."
+          )
+          .then((log) => log);
+      })
+      .catch((err) => err);
+  }
 });
 
 /*
