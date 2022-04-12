@@ -30,4 +30,4 @@ const anime2youInterval = async function () {
   });
 };
 
-const animeInterval = setInterval(anime2youInterval, 900000);
+const animeInterval = setInterval(anime2youInterval, 300000);
