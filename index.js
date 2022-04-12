@@ -17,7 +17,7 @@ client.on("ready", async () => {
 
 client.on("guildMemberAdd", async (member) => {
   member.guild.channels.cache
-    .get(process.env.ChannelID)
+    .get(process.env.ChannelID) /* Change for production */
     .send(
       `${member} Willkommen Sterblicher! Hier Regieren deine 3 Herrscher. Hab keine Angst, Sie passen auf dich auf.`
     );
@@ -26,6 +26,8 @@ client.on("guildMemberAdd", async (member) => {
 client.on("messageCreate", async (message) => {
   const mentions = Array.from(message.mentions.users);
   let content = message.content;
+  const messageType =
+    message.type.toLocaleLowerCase() === "REPLY".toLowerCase();
 
   function messageLength(msgContent) {
     let temp = msgContent;
@@ -37,7 +39,7 @@ client.on("messageCreate", async (message) => {
     return temp.trim().length < 5;
   }
 
-  if (mentions.length >= 1 && messageLength(content)) {
+  if (mentions.length >= 1 && messageLength(content) && !messageType) {
     message
       .delete()
       .then((fullfilled) => {
@@ -60,4 +62,5 @@ client.on("guildMemberUpdate", async (member) => {
 });
 */
 
+/* Change for production */
 client.login(process.env.Token);
