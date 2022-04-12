@@ -44,7 +44,7 @@ client.on("messageCreate", async (message) => {
         client.users.cache
           .get(message.author.id)
           .send(
-            "Sterblicher! Wage es nicht diesen Server voll zu spamen um deine Lust zu befridigen. Als Herrscher ist es meine Pflicht mein Untertanen vor deiner Begierde zu schützen. Schreibe das nächste mal eine Nachricht mit mindestens 5 Zeichen."
+            "Sterblicher! Wage es nicht, diesen Server voll zu spammen, um deine Lust zu befriedigen. Als Herrscher ist es meine Pflicht, meine Untertanen vor deiner Begierde zu schützen. Schreibe das nächste Mal eine Nachricht mit mindestens 5 Zeichen."
           )
           .then((log) => log);
       })
