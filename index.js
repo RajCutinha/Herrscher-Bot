@@ -1,7 +1,10 @@
-import "dotenv/config";
+import dotenv from "dotenv";
+dotenv.config(process.env.ENV ? { path: "./.env." + process.env.ENV } : null);
+
 import Discord from "discord.js";
 import "./utils/server.js";
-import "./utils/rss.js";
+
+process.env.ENV ? null : import("./utils/rss.js");
 
 const client = new Discord.Client({
   intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MEMBERS", "GUILD_PRESENCES"],
@@ -16,9 +19,7 @@ client.on("ready", async () => {
 });
 
 client.on("guildMemberAdd", async (member) => {
-  member.guild.channels.cache
-    .get(process.env.ChannelID) /* Change for production */
-    .send(
+  await member.guild.systemChannel.send(
       `${member} Willkommen Sterblicher! Hier Regieren deine 3 Herrscher. Hab keine Angst, Sie passen auf dich auf.`
     );
 });
@@ -62,5 +63,4 @@ client.on("guildMemberUpdate", async (member) => {
 });
 */
 
-/* Change for production */
 client.login(process.env.Token);
